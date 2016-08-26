@@ -12,8 +12,9 @@ PHP 调试小工具
         Chrome 可以使用
             Webug : https://chrome.google.com/webstore/detail/cjbeipenlpoeifpkjhgakejmikdhlhcj
             Chrome Logger : https://chrome.google.com/webstore/detail/noaneddfkdjfnfdakjjmocngnfkfehhd
-        FireFox 可以使用 firebug 插件
-            ...
+        FireFox 可以使用 firebug + firePHP 插件
+            firebug : https://addons.mozilla.org/zh-CN/firefox/addon/firebug/?src=collection&collection_id=da0ecd99-2289-7ab0-7d57-e7c489c845c3
+            firePHP : https://addons.mozilla.org/zh-CN/firefox/addon/firephp/?src=search
     
     -   注意: 打印大量信息会造成header过大,可能造成nginx错误,upstream too big 什么的错误,可以在nginx配置里调整缓冲区大小
     fastcgi_buffers  16 64k;
