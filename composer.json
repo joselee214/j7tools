@@ -1,6 +1,6 @@
 {
     "name": "j7tools/j7debug",
-    "description": "调试工具 by Jose",
+    "description": "调试工具 by Jose : 通过浏览器插件 firePHP/chromeLogger ,把php代码的调试信息输出在 console , 通过header头传递数据,不会中断 response , 适合调试 ajax 等过程",
     "keywords": [
         "j7debug","j7tools"
     ],
