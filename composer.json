@@ -1,0 +1,22 @@
+{
+    "name": "j7tools/j7debug",
+    "description": "调试工具 by Jose",
+    "keywords": [
+        "j7debug","j7tools"
+    ],
+    "type": "composer",
+    "authors": [
+        {
+            "name": "Jose",
+            "email": "jose@7yes.com",
+            "role": "Founder and project lead"
+        }
+    ],
+    "require": {
+        "php": ">=5.6.0"
+    },
+    "autoload": {
+        "psr-4": {"j7tools\\j7debug\\": "src/"}
+    },
+    "minimum-stability": "dev"
+}
