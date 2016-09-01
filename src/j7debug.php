@@ -11,16 +11,31 @@ class j7debug
     {
         return self::instance()->_debug($v,$k,'trace');
     }
-
-
-    public static function instance()
+    public static function config($v,$k=null)
     {
-        return new j7debug();
+        return self::instance()->setConfig($v,$k);
     }
 
-    protected $_debug_config='FirePHP,ChromePhp';
+    private static $instance=null;
+    public static function instance()
+    {
+        if( is_null(self::$instance) )
+            self::$instance = new j7debug();
+        return self::$instance;
+    }
+
+    protected $_debug_config='FirePHP,ChromePhp';   //FirePHP,ChromePhp,var_dump,filelog
     protected $_isdebug=false;
+
+    // BACKTRACE_LEVEL trace时候跳过几个层级,如果自己封了用法的话,要调整这个,看起来好看点
+    // BACKTRACE_DEEP  trace时候跟踪的深度,也就是好看点而已
+    protected $config = array('BACKTRACE_LEVEL'=>2,'BACKTRACE_DEEP'=>4);
+
     public function __construct()
+    {
+        $this->init();
+    }
+    private function init()
     {
         if(defined('J7_DEBUG_CONFIG'))
             $this->_debug_config = J7_DEBUG_CONFIG;
@@ -29,10 +44,9 @@ class j7debug
         {
             $this->_isdebug = true;
             require_once __DIR__ . '/helper/FirePHP.class.php';
-            $Options = array('BACKTRACE_LEVEL'=>2,'BACKTRACE_DEEP'=>4);
             j7debug\FirePHP::getInstance(true)->setEnabled(true);
-            j7debug\FirePHP::getInstance(true)->setOption('BACKTRACE_LEVEL',$Options['BACKTRACE_LEVEL']);
-            j7debug\FirePHP::getInstance(true)->setOption('BACKTRACE_DEEP',$Options['BACKTRACE_DEEP']);
+            j7debug\FirePHP::getInstance(true)->setOption('BACKTRACE_LEVEL',$this->config['BACKTRACE_LEVEL']);
+            j7debug\FirePHP::getInstance(true)->setOption('BACKTRACE_DEEP',$this->config['BACKTRACE_DEEP']);
         }
         if(  strpos($this->_debug_config,'ChromePhp')!==false )
         {
@@ -43,6 +57,12 @@ class j7debug
         {
             $this->_isdebug = true;
         }
+    }
+
+    public function setConfig($value,$key='_debug_config')
+    {
+        $this->$key = $value;
+        $this->init();
     }
 
     public function _debug($info,$key = 'Debug:',$showp='log')
@@ -66,10 +86,15 @@ class j7debug
                     if (!in_array($showpchrome, array('log', 'info', 'error', 'warn'))) {
                         $showpchrome = 'warn';
                     }
-                    j7debug\ChromePhp::$showpchrome($key, $info, isset($Options['BACKTRACE_LEVEL']) ? ($Options['BACKTRACE_LEVEL'] - 1) : 0);
+                    j7debug\ChromePhp::$showpchrome($key, $info, $this->config['BACKTRACE_LEVEL']-1);
                 }
             }
             if(  strpos($this->_debug_config,'var_dump')!==false )
+            {
+                echo $key.PHP_EOL;
+                var_dump($info);
+            }
+            if(  strpos($this->_debug_config,'filelog')!==false )
             {
                 echo $key.PHP_EOL;
                 var_dump($info);

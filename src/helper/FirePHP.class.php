@@ -895,25 +895,21 @@ class FirePHP {
         if ($Type==self::TRACE) {
           
             $trace = debug_backtrace();
+            $start = $this->options['BACKTRACE_LEVEL'];
+            $start = $start>(count($trace)-1)?(count($trace)-1):$start;
+
             if (!$trace) return false;
-            for( $i=0 ; $i<sizeof($trace) ; $i++ ) {
+            for( $i=$start ; $i<count($trace) ; $i++ ) {
                 if (isset($trace[$i]['class'])
                    && isset($trace[$i]['file'])
-                   && ($trace[$i]['class']=='FirePHP'
-                       || $trace[$i]['class']=='FB')
-                   && (substr($this->_standardizePath($trace[$i]['file']),-18,18)=='FirePHPCore/fb.php'
-                       || substr($this->_standardizePath($trace[$i]['file']),-17,17)=='FirePHP.class.php')) {
+                   && ( substr($trace[$i]['class'],-7,7)=='FirePHP' )
+                   && (substr($this->_standardizePath($trace[$i]['file']),-17,17)=='FirePHP.class.php')) {
                     /* Skip - FB::trace(), FB::send(), $firephp->trace(), $firephp->fb() */
                 } else
-                if (isset($trace[$i]['class'])
-                   && isset($trace[$i+1]['file'])
-                   && $trace[$i]['class']=='FirePHP'
-                   && substr($this->_standardizePath($trace[$i+1]['file']),-18,18)=='FirePHPCore/fb.php') {
-                    /* Skip fb() */
-                } else
-                if ($trace[$i]['function']=='fb'
-                   || $trace[$i]['function']=='trace'
-                   || $trace[$i]['function']=='send') {
+                if (isset($trace[$i]['file'])
+                    && (substr($this->_standardizePath($trace[$i]['file']),-11,11)=='j7debug.php') ) {
+                    /* Skip FB::fb() */
+                } else {
 
                     $Object = array('Class'=>isset($trace[$i]['class'])?$trace[$i]['class']:'',
                                     'Type'=>isset($trace[$i]['type'])?$trace[$i]['type']:'',
@@ -930,7 +926,6 @@ class FirePHP {
                     break;
                 }
             }
-
         } else
         if ($Type==self::TABLE) {
           
@@ -959,31 +954,26 @@ class FirePHP {
             if (!isset($meta['file']) || !isset($meta['line'])) {
 
                 $trace = debug_backtrace();
+                $start = $this->options['BACKTRACE_LEVEL'];
+                $start = $start>(count($trace)-1)?(count($trace)-1):$start;
 
-                for( $i=0 ; $trace && $i<sizeof($trace) ; $i++ ) {
+
+                for( $i=$start ; $trace && $i<count($trace) ; $i++ ) {
                     if (isset($trace[$i]['class'])
                        && isset($trace[$i]['file'])
-                       && ($trace[$i]['class']=='FirePHP'
-                           || $trace[$i]['class']=='FB')
-                       && (substr($this->_standardizePath($trace[$i]['file']),-18,18)=='FirePHPCore/fb.php'
-                           || substr($this->_standardizePath($trace[$i]['file']),-17,17)=='FirePHP.class.php')) {
+                       && ( substr($trace[$i]['class'],-7,7)=='FirePHP' )
+                       && (substr($this->_standardizePath($trace[$i]['file']),-17,17)=='FirePHP.class.php')) {
                         /* Skip - FB::trace(), FB::send(), $firephp->trace(), $firephp->fb() */
                     } else
-                    if (isset($trace[$i]['class'])
-                       && isset($trace[$i+1]['file'])
-                       && $trace[$i]['class']=='FirePHP'
-                       && substr($this->_standardizePath($trace[$i+1]['file']),-18,18)=='FirePHPCore/fb.php') {
-                        /* Skip fb() */
-                    } else
                     if (isset($trace[$i]['file'])
-                       && (substr($this->_standardizePath($trace[$i]['file']),-18,18)=='FirePHPCore/fb.php'||substr($this->_standardizePath($trace[$i]['file']),-11,11)=='j7debug.php') ) {
+                       && (substr($this->_standardizePath($trace[$i]['file']),-11,11)=='j7debug.php') ) {
                         /* Skip FB::fb() */
                     } else {
                         $meta['file'] = isset($trace[$i]['file'])?$this->_escapeTraceFile($trace[$i]['file']):'';
                         $meta['line'] = isset($trace[$i]['line'])?$trace[$i]['line']:'';
                         break;
                     }
-                }      
+                }
             }
         } else {
             unset($meta['file']);
@@ -1017,13 +1007,6 @@ class FirePHP {
                 $msg_meta['Line'] = $meta['line'];
             }
             if ($Type==self::TRACE) {
-                $slice = 0;
-                if( isset($this->options['BACKTRACE_LEVEL']) && $this->options['BACKTRACE_LEVEL'] )
-                {
-                    $slice = $this->options['BACKTRACE_LEVEL'];
-                }
-                $Object['Trace'] = array_slice($Object['Trace'],$slice,(isset($this->options['BACKTRACE_DEEP'])?$this->options['BACKTRACE_DEEP']:3));
-
                 if( isset($Object['Trace']) && isset($Object['Trace'][0]) )
                 {
                     $Object['File'] = $Object['Trace'][0]['file'];
