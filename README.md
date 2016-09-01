@@ -26,15 +26,15 @@ PHP 调试小工具
 -	直接在代码里插入使用
 
     1.	打印对象
-            j7tools\j7debug\J7Debug::debug(['debug_value_array']);
+            j7tools\j7debug::debug(['debug_value_array']);
     2.	输出到console.error
-            j7tools\j7debug\J7Debug::debug(['debug_value_array'],'key');
+            j7tools\j7debug::debug(['debug_value_array'],'key');
     3.  打印调用堆栈信息
-            j7tools\j7debug\J7Debug::debug(['debug_value_array'],'key','trace');
+            j7tools\j7debug::debug(['debug_value_array'],'key','trace');
     4. 浏览器 console 支持 'log','trace','error','warn','dump','info',
         php 代码通过 define('J7_DEBUG_CONFIG','FirePHP,ChromePhp,var_dump') 配置,默认 FirePHP,ChromePhp
     5. 建议封装成自己的全局方法
         function jdebug($value,$key='',$type='log'){
-            if(class_exists('j7tools\j7debug\J7Debug'))
-                j7tools\j7debug\J7Debug::debug($value,$key,$type);
+            if(class_exists('j7tools\j7debug'))
+                j7tools\j7debug::debug($value,$key,$type);
                 }

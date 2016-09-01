@@ -976,7 +976,7 @@ class FirePHP {
                         /* Skip fb() */
                     } else
                     if (isset($trace[$i]['file'])
-                       && (substr($this->_standardizePath($trace[$i]['file']),-18,18)=='FirePHPCore/fb.php'||substr($this->_standardizePath($trace[$i]['file']),-13,13)=='J7Debuger.php') ) {
+                       && (substr($this->_standardizePath($trace[$i]['file']),-18,18)=='FirePHPCore/fb.php'||substr($this->_standardizePath($trace[$i]['file']),-11,11)=='j7debug.php') ) {
                         /* Skip FB::fb() */
                     } else {
                         $meta['file'] = isset($trace[$i]['file'])?$this->_escapeTraceFile($trace[$i]['file']):'';
