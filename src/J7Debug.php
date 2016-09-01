@@ -1,15 +1,7 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jose
- * Date: 16/8/25
- * Time: 下午5:17
- */
+namespace j7tools;
 
-
-namespace j7tools\j7debug;
-
-class J7Debug
+class j7debug
 {
     public static function debug($v,$k = null,$type='log')
     {
@@ -23,7 +15,7 @@ class J7Debug
 
     public static function instance()
     {
-        return new J7Debug();
+        return new j7debug();
     }
 
     protected $_debug_config='FirePHP,ChromePhp';
@@ -38,9 +30,9 @@ class J7Debug
             $this->_isdebug = true;
             require_once __DIR__ . '/helper/FirePHP.class.php';
             $Options = array('BACKTRACE_LEVEL'=>2,'BACKTRACE_DEEP'=>4);
-            FirePHP::getInstance(true)->setEnabled(true);
-            FirePHP::getInstance(true)->setOption('BACKTRACE_LEVEL',$Options['BACKTRACE_LEVEL']);
-            FirePHP::getInstance(true)->setOption('BACKTRACE_DEEP',$Options['BACKTRACE_DEEP']);
+            j7debug\FirePHP::getInstance(true)->setEnabled(true);
+            j7debug\FirePHP::getInstance(true)->setOption('BACKTRACE_LEVEL',$Options['BACKTRACE_LEVEL']);
+            j7debug\FirePHP::getInstance(true)->setOption('BACKTRACE_DEEP',$Options['BACKTRACE_DEEP']);
         }
         if(  strpos($this->_debug_config,'ChromePhp')!==false )
         {
@@ -66,7 +58,7 @@ class J7Debug
             {
                 if(  strpos($this->_debug_config,'FirePHP')!==false )
                 {
-                    FirePHP::getInstance(true)->$showp($info, $key);
+                    j7debug\FirePHP::getInstance(true)->$showp($info, $key);
                 }
                 if(  strpos($this->_debug_config,'ChromePhp')!==false )
                 {
@@ -74,7 +66,7 @@ class J7Debug
                     if (!in_array($showpchrome, array('log', 'info', 'error', 'warn'))) {
                         $showpchrome = 'warn';
                     }
-                    ChromePhp::$showpchrome($key, $info, isset($Options['BACKTRACE_LEVEL']) ? ($Options['BACKTRACE_LEVEL'] - 1) : 0);
+                    j7debug\ChromePhp::$showpchrome($key, $info, isset($Options['BACKTRACE_LEVEL']) ? ($Options['BACKTRACE_LEVEL'] - 1) : 0);
                 }
             }
             if(  strpos($this->_debug_config,'var_dump')!==false )
