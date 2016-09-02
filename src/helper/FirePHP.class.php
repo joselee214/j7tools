@@ -1,5 +1,5 @@
 <?php
-namespace j7tools\j7debug;
+namespace j7tools\helper;
 
 /**
  * *** BEGIN LICENSE BLOCK *****

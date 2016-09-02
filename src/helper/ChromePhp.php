@@ -1,5 +1,5 @@
 <?php
-namespace j7tools\j7debug;
+namespace j7tools\helper;
 
 /**
  * Copyright 2010-2013 Craig Campbell

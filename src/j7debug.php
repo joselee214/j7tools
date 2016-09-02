@@ -44,9 +44,9 @@ class j7debug
         {
             $this->_isdebug = true;
             require_once __DIR__ . '/helper/FirePHP.class.php';
-            j7debug\FirePHP::getInstance(true)->setEnabled(true);
-            j7debug\FirePHP::getInstance(true)->setOption('BACKTRACE_LEVEL',$this->config['BACKTRACE_LEVEL']);
-            j7debug\FirePHP::getInstance(true)->setOption('BACKTRACE_DEEP',$this->config['BACKTRACE_DEEP']);
+            helper\FirePHP::getInstance(true)->setEnabled(true);
+            helper\FirePHP::getInstance(true)->setOption('BACKTRACE_LEVEL',$this->config['BACKTRACE_LEVEL']);
+            helper\FirePHP::getInstance(true)->setOption('BACKTRACE_DEEP',$this->config['BACKTRACE_DEEP']);
         }
         if(  strpos($this->_debug_config,'ChromePhp')!==false )
         {
@@ -78,7 +78,7 @@ class j7debug
             {
                 if(  strpos($this->_debug_config,'FirePHP')!==false )
                 {
-                    j7debug\FirePHP::getInstance(true)->$showp($info, $key);
+                    helper\FirePHP::getInstance(true)->$showp($info, $key);
                 }
                 if(  strpos($this->_debug_config,'ChromePhp')!==false )
                 {
@@ -86,7 +86,7 @@ class j7debug
                     if (!in_array($showpchrome, array('log', 'info', 'error', 'warn'))) {
                         $showpchrome = 'warn';
                     }
-                    j7debug\ChromePhp::$showpchrome($key, $info, $this->config['BACKTRACE_LEVEL']-1);
+                    helper\ChromePhp::$showpchrome($key, $info, $this->config['BACKTRACE_LEVEL']-1);
                 }
             }
             if(  strpos($this->_debug_config,'var_dump')!==false )
