@@ -1251,13 +1251,17 @@ class FirePHP {
         $return = [];
     
         if (is_resource($Object)) {
-    
-            return '** '.(string)$Object.' **';
-    
-        } else    
+            return '**** '.(string)$Object.' **';
+        } else
+//        if (is_object($Object) && $Object instanceof \Error) {
+//            return '**** Error:'.$Object->getMessage().' **';
+//        } else
+//        if (is_object($Object) && $Object instanceof \Exception) {
+//            return '**** Exception:'.$Object->getMessage().' **';
+//        } else
         if (is_object($Object)) {
 
-            return '** '.get_class($Object).' **';
+//            return '**** '.get_class($Object).' **';
 
             if ($ObjectDepth > $this->options['maxObjectDepth']) {
                 return '** Max Object Depth ('.$this->options['maxObjectDepth'].') **';
@@ -1265,7 +1269,7 @@ class FirePHP {
             
             foreach ($this->objectStack as $refVal) {
                 if ($refVal === $Object) {
-                    return '** Recursion ('.get_class($Object).') **';
+                    return '**** Recursion ('.get_class($Object).') **';
                 }
             }
             array_push($this->objectStack, $Object);
@@ -1273,7 +1277,7 @@ class FirePHP {
             $return['__className'] = $class = get_class($Object);
             $class_lower = strtolower($class);
     
-            $reflectionClass = new ReflectionClass($class);  
+            $reflectionClass = new \ReflectionClass($class);
             $properties = [];
             foreach( $reflectionClass->getProperties() as $property) {
                 $properties[$property->getName()] = $property;
