@@ -17,8 +17,8 @@ PHP 调试小工具
             firePHP : https://addons.mozilla.org/zh-CN/firefox/addon/firephp/?src=search
     
     -   注意: 打印大量信息会造成header过大,可能造成nginx错误,upstream too big 什么的错误,可以在nginx配置里调整缓冲区大小
-    fastcgi_buffers  16 64k;
-    fastcgi_buffer_size  128k;
+    fastcgi_buffers  128 512k;
+    fastcgi_buffer_size  10m;
     
     -   Chrome 没有 firefox 支持的好, 当大量打印trace时候, chrome容易莫名其妙崩溃
 
