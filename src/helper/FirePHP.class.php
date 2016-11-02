@@ -1310,15 +1310,15 @@ class FirePHP {
                     if (array_key_exists($raw_name,$members)
                        && !$property->isStatic()) {
                   
-                        $return[$name] = $this->encodeObject($members[$raw_name], $ObjectDepth + 1, 1, $MaxDepth + 1);      
+                        $return[$name] = $name; //$this->encodeObject($members[$raw_name], $ObjectDepth + 1, 1, $MaxDepth + 1);
                 
                     } else {
                         if (method_exists($property,'setAccessible')) {
                             $property->setAccessible(true);
-                            $return[$name] = $this->encodeObject($property->getValue($Object), $ObjectDepth + 1, 1, $MaxDepth + 1);
+                            $return[$name] = $name; //$this->encodeObject($property->getValue($Object), $ObjectDepth + 1, 1, $MaxDepth + 1);
                         } else
                         if ($property->isPublic()) {
-                            $return[$name] = $this->encodeObject($property->getValue($Object), $ObjectDepth + 1, 1, $MaxDepth + 1);
+                            $return[$name] = $name; //$this->encodeObject($property->getValue($Object), $ObjectDepth + 1, 1, $MaxDepth + 1);
                         } else {
                             $return[$name] = '** Need PHP 5.3 to get value **';
                         }
@@ -1348,7 +1348,7 @@ class FirePHP {
                          && is_array($this->objectFilters[$class_lower])
                          && in_array($plain_name,$this->objectFilters[$class_lower]))) {
     
-                        $return[$name] = $this->encodeObject($value, $ObjectDepth + 1, 1, $MaxDepth + 1);
+                        $return[$name] = $name; //$this->encodeObject($value, $ObjectDepth + 1, 1, $MaxDepth + 1);
                     } else {
                         $return[$name] = '** Excluded by Filter **';
                     }
