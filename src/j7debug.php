@@ -40,7 +40,7 @@ class j7debug
         if(defined('J7_DEBUG_CONFIG'))
             $this->_debug_config = J7_DEBUG_CONFIG;
 
-        if(  strpos($this->_debug_config,'FirePHP')!==false )
+        if( isset($_SERVER['HTTP_X_FIREPHP']) && strpos($this->_debug_config,'FirePHP')!==false )
         {
             $this->_isdebug = true;
             require_once __DIR__ . '/helper/FirePHP.class.php';
@@ -76,7 +76,7 @@ class j7debug
 
             if( isset($_SERVER['REQUEST_URI']) )
             {
-                if(  strpos($this->_debug_config,'FirePHP')!==false )
+                if(  isset($_SERVER['HTTP_X_FIREPHP']) && strpos($this->_debug_config,'FirePHP')!==false )
                 {
                     helper\FirePHP::getInstance(true)->$showp($info, $key);
                 }
