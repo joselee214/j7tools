@@ -29,7 +29,7 @@ class ChromePhp
 	 * @var array
 	 */
 	protected $_settings = array(
-		self::BACKTRACE_LEVEL => 0
+		self::BACKTRACE_LEVEL => 4
 	);
 
 	/**
@@ -265,7 +265,7 @@ class ChromePhp
 			$logs[] = $logger->_convert($arg);
 		}
 
-		$backtrace = debug_backtrace(false);
+		$backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
 		$level = $logger->getSetting(self::BACKTRACE_LEVEL)+(isset($args[2])?$args[2]:0);
 		if(isset($args[2]))
 			unset($logs[2]);
