@@ -29,7 +29,7 @@ class ChromePhp
 	 * @var array
 	 */
 	protected $_settings = array(
-		self::BACKTRACE_LEVEL => 3
+		self::BACKTRACE_LEVEL => 0
 	);
 
 	/**
