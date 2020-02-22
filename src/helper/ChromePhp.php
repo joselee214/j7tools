@@ -269,12 +269,12 @@ class ChromePhp
 		$level = $logger->getSetting(self::BACKTRACE_LEVEL)+(isset($args[2])?$args[2]:0);
 		if(isset($args[2]))
 			unset($logs[2]);
-		$backtrace_message = 'unknown';
+		$backtrace_message = '';
 		if (isset($backtrace[$level]['file']) && isset($backtrace[$level]['line'])) {
 			$backtrace_message = $backtrace[$level]['file'] . ' : ' . $backtrace[$level]['line'];
 		}
-
-		$logger->_addRow($logs, $backtrace_message, $type);
+        if( $backtrace_message )
+    		$logger->_addRow($logs, $backtrace_message, $type);
 	}
 
 	/**
